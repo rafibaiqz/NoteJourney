@@ -15,13 +15,16 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\Checkbox;
+use Filament\Tables\Columns\BooleanColumn;
+use Filament\Tables\Filters\Filter;
 
 
 class NoteResource extends Resource
 {
     protected static ?string $model = Note::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-bookmark';
+    protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
     protected static ?string $navigationGroup = "Catatan";
 
@@ -30,15 +33,17 @@ class NoteResource extends Resource
         return $form
             ->schema([
                 TextInput::make('title')
-                ->required()
-                ->placeholder('judul')
-                ->maxLength(255)
-                ->columnSpan('full'),
+                    ->required()
+                    ->placeholder('judul')
+                    ->maxLength(255)
+                    ->columnSpan('full'),
                 Textarea::make('content')
-                ->required()
-                ->rows(20)
-                ->placeholder('catatan')
-                ->columnSpan('full'),
+                    ->required()
+                    ->rows(20)
+                    ->placeholder('catatan')
+                    ->columnSpan('full'),
+                Checkbox::make('is_favorite')
+                    ->label('Tandai sebagai favorit'),
             ]);
     }
 
@@ -47,11 +52,17 @@ class NoteResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('title')->sortable()->searchable(),
+                BooleanColumn::make('is_favorite')
+                    ->label('Favorit')
+                    ->trueIcon('heroicon-o-bookmark')
+                    ->falseIcon('')
+                    ->sortable(),
                 TextColumn::make('content')->limit(50),
                 TextColumn::make('created_at')->dateTime(),
             ])
             ->filters([
-                //
+                Filter::make('Hanya Favorit')
+                ->query(fn (Builder $query) => $query->where('is_favorite', true)),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
