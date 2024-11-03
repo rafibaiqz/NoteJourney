@@ -1,0 +1,34 @@
+/* Mengubah warna background seluruh halaman */
+body {
+    background-color: #f4f4f9; /* Warna latar belakang terang */
+    color: #333; /* Warna teks */
+}
+
+/* Mengubah warna sidebar di Filament */
+.filament-sidebar {
+    background-color: #1e3a8a; /* Warna biru tua */
+    color: #fff; /* Warna teks sidebar */
+}
+
+/* Mengubah warna header di Filament */
+.filament-main-header {
+    background-color: #f59e0b; /* Warna kuning */
+    color: #000; /* Warna teks header */
+}
+
+/* Mengubah warna tombol utama */
+.filament-button {
+    background-color: #4a90e2; /* Warna biru tombol */
+    color: #fff;
+}
+
+/* Mengubah warna teks tombol saat di-hover */
+.filament-button:hover {
+    background-color: #357ABD; /* Warna biru lebih gelap saat di-hover */
+}
+
+/* Mengubah warna tabel */
+.filament-tables-table {
+    background-color: #fff;
+    color: #000;
+}
